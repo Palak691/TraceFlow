@@ -1,0 +1,35 @@
+.backButton {
+display: flex;
+align-items: center;
+gap: 8px;
+
+padding: 8px 0;
+
+border: none;
+background: transparent;
+
+color: #374151;
+font-size: 0.9rem;
+font-weight: 500;
+
+cursor: pointer;
+transition: color 0.2s ease;
+}
+
+.backButton:hover {
+color: #111827;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+.backButton {
+font-size: 1rem;
+}
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+.backButton {
+font-size: 1rem;
+}
+}

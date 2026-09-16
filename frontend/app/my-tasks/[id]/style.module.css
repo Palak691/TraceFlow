@@ -1,0 +1,120 @@
+.tasksPage {
+  padding: 20px 16px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  color: #F5C563;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  margin: 24px 0 14px;
+}
+
+.sectionTitle:first-child {
+  margin-top: 0;
+}
+
+.error {
+  color: #f87171;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.emptyState {
+  color: #A8B0C4;
+  font-size: 14px;
+  padding: 10px 0;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.taskCard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #141D33;
+  border: 1px solid #223055;
+  border-radius: 10px;
+}
+
+.taskTitle {
+  flex: 1 1 100%;
+  color: #F8F9FB;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.deadline,
+.assignee {
+  font-size: 13px;
+  color: #A8B0C4;
+}
+
+.statusBadge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.pending {
+  background: #2a2410;
+  color: #F5C563;
+}
+
+.in_progress {
+  background: #1a2540;
+  color: #7CA8F5;
+}
+
+.completed {
+  background: #10241a;
+  color: #4ade80;
+}
+
+.markDoneBtn {
+  margin-left: auto;
+  padding: 6px 14px;
+  border: 1px solid #F5C563;
+  border-radius: 6px;
+  background: transparent;
+  color: #F5C563;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.markDoneBtn:hover {
+  background: #F5C563;
+  color: #141D33;
+}
+
+@media (min-width: 768px) {
+  .tasksPage {
+    padding: 30px 28px;
+  }
+
+  .taskCard {
+    flex-wrap: nowrap;
+  }
+
+  .taskTitle {
+    flex: 1 1 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tasksPage {
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}

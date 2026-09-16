@@ -1,0 +1,38 @@
+.notFoundPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #1E2A4A;
+  text-align: center;
+  padding: 20px;
+}
+
+.notFoundPage h1 {
+  font-size: 64px;
+  color: #F5C563;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  margin: 0;
+}
+
+.notFoundPage p {
+  color: #A8B0C4;
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.homeBtn {
+  padding: 12px 24px;
+  background: #F5C563;
+  color: #141D33;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.homeBtn:hover {
+  background: #E8B347;
+}

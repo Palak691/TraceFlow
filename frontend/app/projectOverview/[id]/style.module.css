@@ -1,0 +1,357 @@
+/* ==========================
+   Base (mobile-first)
+   ========================== */
+
+.projectOverview {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1rem;
+  max-width: 100%;
+  background: #1E2A4A;
+  min-height: 100vh;
+}
+
+.projectHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.projectHeader h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  word-break: break-word;
+  color: #F5C563;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+.projectHeader p {
+  font-size: 0.875rem;
+  color: #A8B0C4;
+}
+
+.roleBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #F8F9FB;
+  background: #223055;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.memberEmptyState {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px dashed #A8B0C4;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.memberEmptyState button {
+  align-self: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  border: none;
+  background: #F5C563;
+  color: #141D33;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.memberEmptyState button:hover {
+  background: #E8B347;
+}
+
+.inviteCodeBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  background: #141D33;
+  border: 1px solid #223055;
+  border-radius: 0.5rem;
+  color: #F8F9FB;
+}
+
+.inviteCodeBox button {
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.375rem;
+  border: 1px solid #A8B0C4;
+  background: transparent;
+  color: #F8F9FB;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.inviteCodeBox button:hover {
+  background: #223055;
+}
+
+.searchBar {
+  width: 100%;
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #A8B0C4;
+  border-radius: 0.5rem;
+  outline: none;
+  background: #0F1729;
+  color: #F8F9FB;
+}
+
+.searchBar input::placeholder {
+  color: #6b7280;
+}
+
+.searchBar input:focus {
+  border-color: #F5C563;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionHeader h2,
+.section > h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #F8F9FB;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+.sectionHeader button {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.375rem;
+  border: 1px solid #F5C563;
+  background: transparent;
+  color: #F5C563;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.sectionHeader button:hover {
+  background: #F5C563;
+  color: #141D33;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conversationItem,
+.decisionItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.75rem;
+  border: 1px solid #223055;
+  border-radius: 0.5rem;
+  background: #141D33;
+}
+
+.conversationItem p,
+.decisionItem p {
+  color: #F8F9FB;
+  font-size: 0.875rem;
+}
+
+.sourceTag,
+.typeTag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #7CA8F5;
+  background: #1a2540;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.typeTag {
+  color: #F5C563;
+  background: #2a2410;
+}
+
+/* Task table: card-style rows on mobile */
+.taskTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.taskTable thead {
+  display: none;
+}
+
+.taskTable tbody tr {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.75rem;
+  margin-bottom: 0.6rem;
+  border: 1px solid #223055;
+  border-radius: 0.5rem;
+  background: #141D33;
+}
+
+.taskTable td {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  padding: 0.15rem 0;
+  color: #F8F9FB;
+}
+
+.taskTable td:first-child {
+  font-weight: 600;
+  justify-content: flex-start;
+  color: #F5C563;
+}
+
+.taskTable td::before {
+  content: attr(data-label);
+  font-weight: 600;
+  color: #A8B0C4;
+  margin-right: 8px;
+}
+
+.taskTable td:first-child::before {
+  content: none;
+}
+
+.projectOverview > p {
+  color: #A8B0C4;
+}
+
+
+/* ==========================
+   Tablet — 768px and up
+   ========================== */
+
+@media (min-width: 768px) {
+  .projectOverview {
+    padding: 1.5rem 2rem;
+    gap: 1.5rem;
+  }
+
+  .projectHeader {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .projectHeader h1 {
+    font-size: 1.6rem;
+  }
+
+  .searchBar input {
+    max-width: 420px;
+  }
+
+  .memberEmptyState {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .taskTable thead {
+    display: table-header-group;
+  }
+
+  .taskTable tbody tr {
+    display: table-row;
+    padding: 0;
+    margin-bottom: 0;
+    border: none;
+    border-bottom: 1px solid #223055;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .taskTable th,
+  .taskTable td {
+    display: table-cell;
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .taskTable td::before {
+    content: none;
+  }
+
+  .taskTable td:first-child {
+    color: #F8F9FB;
+  }
+
+  .taskTable th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #A8B0C4;
+    border-bottom: 1px solid #223055;
+  }
+
+  .list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .conversationItem,
+  .decisionItem {
+    flex: 1 1 calc(50% - 0.6rem);
+  }
+}
+
+
+/* ==========================
+   Desktop — 1024px and up
+   ========================== */
+
+@media (min-width: 1024px) {
+  .projectOverview {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 2.5rem;
+    gap: 2rem;
+  }
+
+  .projectHeader h1 {
+    font-size: 1.9rem;
+  }
+
+  .conversationItem,
+  .decisionItem {
+    flex: 1 1 calc(33.333% - 0.8rem);
+  }
+
+  .sectionHeader button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}

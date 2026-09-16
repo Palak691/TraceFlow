@@ -1,0 +1,237 @@
+.communicationPage {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 16px;
+  background: #1E2A4A;
+}
+
+
+.inputForm {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.inputForm select,
+.inputForm textarea {
+  width: 100%;
+  border: 1px solid #A8B0C4;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  background: #0F1729;
+  color: #F8F9FB;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inputForm select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A8B0C4' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+.inputForm textarea {
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.inputForm select:focus,
+.inputForm textarea:focus {
+  border-color: #F5C563;
+  box-shadow: 0 0 0 2px rgba(245, 197, 99, 0.15);
+}
+
+.inputForm textarea::placeholder {
+  color: #6b7280;
+}
+
+.error {
+  color: #f87171;
+  font-size: 14px;
+  margin: -6px 0 0;
+}
+
+.emptyState {
+  text-align: center;
+  color: #A8B0C4;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+
+.inputForm button {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 13px 18px;
+  background: #F5C563;
+  color: #141D33;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.inputForm button:hover {
+  background: #E8B347;
+}
+
+.inputForm button:active {
+  transform: scale(0.99);
+}
+
+.inputForm button:disabled {
+  background: #4b5563;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+
+
+.conversationList {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.conversationCard {
+  width: 100%;
+  padding: 18px;
+  border: 1px solid #223055;
+  border-radius: 10px;
+  background: #141D33;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.source {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: #1a2540;
+  color: #7CA8F5;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.summary {
+  margin: 0 0 10px;
+  color: #F8F9FB;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.rawPreview {
+  margin: 0;
+  color: #A8B0C4;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+.imageForm {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background: #141D33;
+  border: 1px dashed #223055;
+  border-radius: 10px;
+}
+
+.imageInput {
+  display: none;
+}
+
+.imageLabel {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  text-align: center;
+  border: 1px solid #A8B0C4;
+  border-radius: 8px;
+  background: #0F1729;
+  color: #A8B0C4;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.imageLabel:hover {
+  border-color: #F5C563;
+  color: #F8F9FB;
+}
+
+
+@media (min-width: 768px) {
+  .communicationPage {
+    padding: 30px 28px;
+  }
+
+  .inputForm {
+    max-width: 750px;
+    gap: 16px;
+  }
+
+  .inputForm textarea {
+    min-height: 180px;
+  }
+
+  .conversationList {
+    max-width: 900px;
+    gap: 18px;
+  }
+
+  .conversationCard {
+    padding: 20px;
+  }
+}
+
+
+
+@media (min-width: 1024px) {
+  .communicationPage {
+    padding: 40px;
+  }
+
+  .inputForm {
+    max-width: 800px;
+    margin-bottom: 40px;
+  }
+
+  .inputForm select,
+  .inputForm textarea {
+    font-size: 16px;
+  }
+
+  .inputForm button {
+    width: fit-content;
+    align-self: flex-end;
+    padding: 13px 24px;
+  }
+
+  .conversationList {
+    max-width: 1000px;
+  }
+
+  .conversationCard {
+    padding: 22px 24px;
+  }
+}

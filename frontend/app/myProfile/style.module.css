@@ -1,0 +1,322 @@
+.profilePage {
+  min-height: 100vh;
+  padding: 20px 16px;
+  background: #1E2A4A;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loadingState {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1E2A4A;
+  color: #A8B0C4;
+  font-size: 15px;
+}
+
+/* ---------------- PROFILE CARD ---------------- */
+
+.profileCard {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  background: #141D33;
+  border: 1px solid #223055;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* ---------------- AVATAR ---------------- */
+
+.avatarWrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatarInitials {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #F5C563;
+  color: #141D33;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 29, 51, 0.75);
+  color: #F5C563;
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  text-align: center;
+  padding: 4px;
+}
+
+.avatarWrap:hover .avatarOverlay {
+  opacity: 1;
+}
+
+.profileCard h1 {
+  font-size: 22px;
+  color: #F8F9FB;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  margin-bottom: 6px;
+}
+
+.email {
+  font-size: 14px;
+  color: #A8B0C4;
+  margin-bottom: 4px;
+}
+
+.memberSince {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ---------------- INLINE NAME EDIT ---------------- */
+
+.editableName {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.editIcon {
+  font-size: 14px;
+  color: #A8B0C4;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.editableName:hover .editIcon {
+  opacity: 1;
+}
+
+.editableName:hover {
+  color: #F5C563;
+}
+
+.nameEditWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.nameInput {
+  font-size: 22px;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  text-align: center;
+  background: #0F1729;
+  border: 1px solid #F5C563;
+  border-radius: 8px;
+  color: #F8F9FB;
+  padding: 6px 12px;
+  outline: none;
+  width: 100%;
+  max-width: 280px;
+}
+
+.savingHint {
+  font-size: 12px;
+  color: #A8B0C4;
+}
+
+.nameError {
+  color: #f87171;
+  font-size: 13px;
+  margin: 0 0 6px;
+}
+
+/* ---------------- PROJECTS SECTION ---------------- */
+
+.projectsSection {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.emptyState {
+  color: #A8B0C4;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* ---------------- PROJECTS ---------------- */
+
+.myProjects {
+  text-align: left;
+  padding: 20px;
+  background: linear-gradient(145deg, #141D33, #182347);
+  border: 1px solid #F5C563;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(245, 197, 99, 0.08);
+}
+
+.myProjectsHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.myProjectsHeader h2 {
+  font-size: 18px;
+  color: #F5C563;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  margin: 0;
+}
+
+.projectCount {
+  font-size: 12px;
+  font-weight: 700;
+  color: #141D33;
+  background: #F5C563;
+  padding: 2px 9px;
+  border-radius: 999px;
+}
+
+.myProjects ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.projectLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background-color: #0F1729;
+  border: 1px solid #223055;
+  border-radius: 8px;
+  color: #F8F9FB;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.projectLink:hover {
+  background-color: #223055;
+  border-color: #F5C563;
+  transform: translateX(2px);
+}
+
+.projectDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+}
+
+.projectLinkText {
+  flex: 1;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.roleBadge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #141D33;
+  background: #F5C563;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.projectArrow {
+  color: #F5C563;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.projectLink:hover .projectArrow {
+  opacity: 1;
+}
+
+
+
+@media (min-width: 768px) {
+
+  .profilePage {
+    padding: 40px 28px;
+    gap: 32px;
+  }
+
+  .profileCard {
+    padding: 40px 30px;
+  }
+
+  .avatarWrap {
+    width: 96px;
+    height: 96px;
+  }
+
+  .avatarInitials {
+    font-size: 32px;
+  }
+
+  .profileCard h1 {
+    font-size: 26px;
+  }
+
+  .myProjects ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+
+
+@media (min-width: 1024px) {
+
+  .profilePage {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 20px;
+  }
+
+  .myProjects ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}

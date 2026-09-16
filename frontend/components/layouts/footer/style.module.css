@@ -1,0 +1,94 @@
+.footer {
+  width: 100%;
+  background: #141D33;
+  border-top: 1px solid #223055;
+  padding: 24px 16px 16px;
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.brand {
+  text-align: center;
+}
+
+.brandName {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #F5C563;
+}
+
+.tagline {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #A8B0C4;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.links a {
+  font-size: 14px;
+  color: #F8F9FB;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.links a:hover {
+  color: #F5C563;
+}
+
+.bottomBar {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #223055;
+  text-align: center;
+}
+
+.bottomBar p {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .footer {
+    padding: 32px 40px 20px;
+  }
+
+  .footerContent {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    text-align: left;
+  }
+
+  .links {
+    flex-direction: row;
+    gap: 24px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .footer {
+    padding: 36px 70px 20px;
+  }
+
+  .links {
+    gap: 32px;
+  }
+}

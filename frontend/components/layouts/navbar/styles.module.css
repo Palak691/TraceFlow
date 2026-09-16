@@ -1,0 +1,167 @@
+.navContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #1E2A4A;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.brand img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px; /* soft square, not circle */
+  object-fit: cover;
+}
+
+.brand span {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #F5C563;
+}
+.profileBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid #A8B0C4;
+  border-radius: 50%;
+  color: #F8F9FB;
+  cursor: pointer;
+}
+
+.profileBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.profileBtn:hover {
+  color: #F5C563;
+  border-color: #F5C563;
+}
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navRight a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #F8F9FB;
+  text-decoration: none;
+}
+
+.navRight a:hover {
+  color: #F5C563;
+}
+
+.userArea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #A8B0C4;
+  font-size: 13px;
+}
+
+.userArea span {
+  display: none; 
+  cursor: pointer;
+}
+
+
+.logoutBtn {
+  background: transparent;
+  border: 1px solid #A8B0C4;
+  color: #F8F9FB;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logoutBtn:hover {
+  background-color: #F5C563;
+  color: #141D33;
+  border-color: #F5C563;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .navContainer {
+    padding: 16px 40px;
+  }
+
+  .brand img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .brand span {
+    font-size: 20px;
+  }
+
+  .navRight {
+    gap: 24px;
+  }
+
+  .navRight a {
+    font-size: 15px;
+  }
+
+  .userArea span {
+    display: inline; 
+  }
+  .profileBtn{
+ display: none;
+  }
+
+  .userArea {
+    font-size: 14px;
+  }
+  
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .navContainer {
+    padding: 20px 70px;
+  }
+
+  .brand img {
+    width: 52px;
+    height: 52px;
+  }
+
+  .brand span {
+    font-size: 22px;
+  }
+   .userArea span {
+    display: inline;
+  }
+
+  .profileBtn{
+ display: none;
+  }
+  .navRight {
+    gap: 30px;
+  }
+
+  .navRight a {
+    font-size: 16px;
+  }
+  
+}
