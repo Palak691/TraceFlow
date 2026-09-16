@@ -3,12 +3,12 @@ import  {sendInviteEmails}  from "../services/emailService.js";
 import ExpressErr from "../utlis/ExpressErr.js";
 
 export const createProject = async (req,res)=>{
-    const {projectName, projectType, description,inviteEmails,projectTypeOther } = req.body;
+    const {projectName, projectType, description,projectTypeOther } = req.body;
      
      if (!projectName) throw new ExpressErr(400, 'Project name is required');
      if (!projectType) throw new ExpressErr(400, 'Project type is required');
 
-   const allowedProjectTypes = ['residential', 'commercial', 'institutional', 'interior', 'renovation', 'other'];
+     const allowedProjectTypes = ['residential', 'commercial', 'institutional', 'interior', 'renovation', 'other'];
     if (!allowedProjectTypes.includes(projectType)) {
      throw new ExpressErr(400, 'Please select a valid project type');
      }
@@ -17,30 +17,15 @@ export const createProject = async (req,res)=>{
      }
 
      const project = await Project.create({
-       projectName,
+        projectName,
         projectType,
         projectTypeOther,
         description,
         createdBy : req.user._id,
         members : [{user : req.user._id , role :  'project_manager'}]
      });
-      let emailResult = { sent: 0, failed: [] };
-      if (inviteEmails && inviteEmails.length > 0) {
-        console.log("➡️ CALLING sendInviteEmails NOW");
-      try {
-        emailResult = await sendInviteEmails({
-          emails: inviteEmails,
-          inviteCode: project.inviteCode,
-          projectName: project.projectName,
-          inviterName: req.user.name,
-        });
-        console.log("🚀 ABOUT TO SEND INVITES");
-console.log("INVITE EMAILS:", inviteEmails);
-      } catch (emailErr) {
-        console.error('Invite email sending failed:', emailErr.message);
-      }
-    }
-      res.status(201).json({ success: true, project,emailResult });
+   
+      res.status(201).json({ success: true, project });
 }
 
 export const joinProject = async(req,res)=>{
@@ -111,4 +96,21 @@ export const transferOwnership = async (req, res) => {
 
   await project.save();
   res.json({ success: true, project });
+};
+
+export const deleteProject = async (req, res) => {
+  const { projectId } = req.params;
+
+  const project = await Project.findById(projectId);
+
+  if (!project) {
+    throw new ExpressErr(404, 'Project not found');
+  }
+
+  await Project.findOneAndDelete({ _id: projectId });
+
+  res.status(200).json({
+    success: true,
+    message: 'Project deleted successfully'
+  });
 };

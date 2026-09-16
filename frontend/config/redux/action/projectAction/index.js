@@ -73,4 +73,20 @@ export const getProjectById = createAsyncThunk(
         return thunkAPI.rejectWithValue(err.response?.data || {message : err.message})
     }
 });
-//delete
+
+
+
+export const deleteProject = createAsyncThunk(
+    'project/delete',
+    async({projectId,token},thunkAPI)=>{
+        try{
+        const response = await clientServer.delete(`/api/project/${projectId}`,{
+              headers : {
+                Authorization : `Bearer ${token}`
+              }
+        });
+            return response.data
+    }catch(err){
+        return thunkAPI.rejectWithValue(err.response?.data || {message : err.message})
+    }
+});

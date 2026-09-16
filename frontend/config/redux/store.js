@@ -4,6 +4,7 @@ import projectReducer from './reducer/projectReducer'
 import taskReducer from './reducer/taskReducer'
 import decisionReducer from './reducer/decisionReducer'
 import conversationReducer from './reducer/conversationReducer'
+import searchReducer from './reducer/searchRuducer'
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
        task : taskReducer,
        decision : decisionReducer,
        conversation : conversationReducer,
+       search : searchReducer,
        
     }
 });

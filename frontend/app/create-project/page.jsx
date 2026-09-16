@@ -15,8 +15,7 @@ const CreateProject = () => {
     projectName: '',
     projectType: '',
     projectTypeOther:'',
-    description: '',
-    inviteEmails : '',
+    description: ''
 
   });
   const [loading, setLoading] = useState(false);
@@ -42,15 +41,12 @@ const CreateProject = () => {
   setError('');
   setMessage('');
   try {
-    const inviteList = project.inviteEmails.split(',').map((email) => email.trim())
-    .filter(Boolean);
     const result = await dispatch(
-      createProject({ project: { ...project, inviteEmails: inviteList }, token })
+      createProject({ project: { ...project }, token })
     ).unwrap();
 
-    setMessage( result.emailResult?.sent > 0? `Project created. Invites sent to ${result.emailResult.sent} member(s).`
-    : 'New Project Created');
-    setProject({ projectName: '', projectType: '', description: '', inviteEmails: '' ,projectTypeOther :''});
+    setMessage( 'New Project Created');
+    setProject({ projectName: '', projectType: '', description: '' ,projectTypeOther :''});
     setTimeout(() => {
       router.push(`/projectOverview/${result.project._id}`);
     }, 2000);
@@ -98,12 +94,6 @@ const CreateProject = () => {
               <textarea id="project_desc" name="description" placeholder="A residential architecture project"
                 rows="4" value={project.description} onChange={handleChange} />
             </div>
-            <div className={styles.invite_members}>
-           <label htmlFor="invite_members">Invite Members</label>
-           <input  type="text" id="invite_members" name="inviteEmails"  value={project.inviteEmails}
-           placeholder="email1@example.com, email2@example.com"  onChange={handleChange}/>
-          <span className={styles.hint}>Comma-separated emails. Optional — you can invite later via invite code.</span>
-          </div>
             {error && <p className={styles.error}>{error}</p>}
             {message && <p className={styles.success}>{message}</p>}         
             <button type="submit" disabled={loading}>

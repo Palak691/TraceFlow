@@ -64,6 +64,7 @@ const CommunicationPage = () => {
             <option value="chat">WhatsApp / Chat</option>
             <option value="email">Email</option>
             <option value="meeting">Meeting notes</option>
+            <option value="manual"> Manual</option>
             <option value="call">Call transcript</option>
             <option value="voice_note">Voice note transcript</option>
           </select>

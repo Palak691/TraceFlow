@@ -1,14 +1,28 @@
 import React, { useState } from 'react'
 import styles from './style.module.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation';
+import { deleteProject } from '@/config/redux/action/projectAction';
 
 const AdminLayout = ({project}) => {
+  const { token } = useSelector((state) => state.auth);
   const [copied, setCopied] = useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleCopyInvite = () => {
     navigator.clipboard.writeText(project.inviteCode);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
+  };
+ 
+  const handleDeleteProject = async (projectId) => {
+    try{
+     await dispatch(deleteProject({projectId : project._id ,token})).unwrap();
+      router.push('/');
+    }catch (error) {
+    console.log(error);
+  }
   };
   return (
    
@@ -35,7 +49,7 @@ const AdminLayout = ({project}) => {
       </div>
 
       <div className={styles.delete}>
-        <button className={styles.deleteButton}>Delete Project</button>
+        <button className={styles.deleteButton} onClick={handleDeleteProject}>Delete Project</button>
       </div>
     </section>
 

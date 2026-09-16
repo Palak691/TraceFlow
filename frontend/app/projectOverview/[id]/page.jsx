@@ -52,7 +52,6 @@ const ProjectOverviewPage = () => {
   });
 
   const currentUserRole = currentMember?.role;
-  console.log(currentMember)
   const isAdmin = currentUserRole === 'project_manager';
 
   const filteredTasks = tasks.filter((t) =>
@@ -110,12 +109,14 @@ const ProjectOverviewPage = () => {
 
         {isAdmin && <AdminLayout project={currentProject} />}
         <section className={styles.section}>
+            {currentUserRole !== 'client' &&
           <div className={styles.sectionHeader}>
             <h2>Conversations</h2>
             <button onClick={() => router.push(`/communication/${id}`)}>
               + Add Conversation
             </button>
           </div>
+}
           {filteredConversations.length === 0 ? (
             <p>No threads yet.</p>
           ) : (
@@ -149,7 +150,7 @@ const ProjectOverviewPage = () => {
                   <tr key={t._id}>
                     <td>{t.title}</td>
                     {/* <td>{t.assignee || t.assigneeRaw || 'Unassigned'}</td> */}
-                    <span className={styles.assignee}>{t.assignee?.name || t.assigneeRaw || 'Unassigned — needs review'}</span>
+                    <td className={styles.assignee}>{t.assignee?.name || t.assigneeRaw || 'Unassigned — needs review'}</td>
                     <td>{t.deadline ? new Date(t.deadline).toLocaleDateString() : '—'}</td>
                     <td>{t.status}</td>
                   </tr>
