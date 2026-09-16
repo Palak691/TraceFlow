@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 8000;
 
 
 
-const allowedOrigin = ["http://localhost:3000"];
+const allowedOrigin = "https://trace-flow-tau.vercel.app"
 app.use(cors({
   origin: allowedOrigin,
   credentials: true
