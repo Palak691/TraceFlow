@@ -41,11 +41,12 @@ const decisionSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.decisions = action.payload?.decisions;
+        state.decisions = action.payload?.decisions || [];
         state.message = "Fetched Decisions sucessfully";
     })
     .addCase(getDecisionsByProject.rejected,(state,action)=>{
         state.isError = true;
+        state.isSuccess = false;
         state.isLoading = false;
         state.message = action.payload?.message || 'Failed to Fetch decisions';
     })

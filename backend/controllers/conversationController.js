@@ -30,11 +30,11 @@ const processAndSaveConversation = async ({ projectId, source, rawText, userId }
 };
 
 export const createConversation = async (req, res) => {
-  const { projectId, source, rawText } = req.body;
-  if (!rawText || !projectId) throw new ExpressErr(400, 'projectId and rawText are required');
+  const {source, rawText } = req.body;
+  if (!rawText) throw new ExpressErr(400, ' rawText is required');
 
   const result = await processAndSaveConversation({
-    projectId,
+    projectId : req.project._id,
     source: source || 'chat',
     rawText,
     userId: req.user._id
@@ -44,9 +44,7 @@ export const createConversation = async (req, res) => {
 };
 
 export const createConversationFromImage = async (req, res) => {
-  const { projectId } = req.body;
   if (!req.file) throw new ExpressErr(400, 'No image uploaded');
-  if (!projectId) throw new ExpressErr(400, 'projectId is required');
 
   let extractedText;
   try {
@@ -56,7 +54,7 @@ export const createConversationFromImage = async (req, res) => {
   }
 
   const result = await processAndSaveConversation({
-    projectId,
+    projectId : req.project._id,
     source: 'image',
     rawText: extractedText,
     userId: req.user._id
@@ -66,7 +64,7 @@ export const createConversationFromImage = async (req, res) => {
 };
 
 export const getConversationsByProject = async (req, res) => {
-  const conversations = await Conversation.find({ projectId: req.params.projectId })
+  const conversations = await Conversation.find({ projectId: req.project._id })
     .sort({ createdAt: -1 });
   res.json({ success: true, conversations });
 };

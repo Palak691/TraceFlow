@@ -38,7 +38,7 @@ const conversationSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.conversations.unshift(action.payload.conversation);
+         state.conversations.unshift(action.payload.conversation);
         // newest conversation to show up
         state.message = "Conversation processed"
     })
@@ -69,8 +69,10 @@ const conversationSlice = createSlice({
     .addCase(createConversationFromImage.fulfilled,(state,action)=>{
         state.isLoading = false;
         state.isError = false;
-        state.conversations = unshift(action.payload?.conversations);
-        state.message = "Image processed";
+      if (action.payload?.conversation) {
+        state.conversations.unshift(action.payload.conversation);
+        }
+        state.message = "Image processed"; 
     })
     .addCase(createConversationFromImage.rejected, (state,action)=>{
         state.isError = true;

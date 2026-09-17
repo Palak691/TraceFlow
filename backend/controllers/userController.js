@@ -62,35 +62,39 @@ export const uploadProfilePicture = async (req,res) =>{
 }
 
 
-export const getUserAndProfile =  async (req,res) =>{
-        const userId = req.user._id;
+export const getUserAndProfile = async (req, res) => {
+    const user = req.user;
+    const userId = user._id;
 
-        const user = await User.findById(userId);
-        if (!user) throw new ExpressErr(404, 'User not found');
-    
+    const projects = await Project.find({'members.user': userId}).select('projectName members');
 
-        const projects = await Project.find({'members.user' : userId})
-           .select('projectName members');
-      
-        const myProjects = projects.map(p => {
-        const myMembership = p.members.find(m => m.user.toString() === userId.toString());
-         return {
+    const myProjects = projects.map(p => {
+        const myMembers = p.members.find(m => m.user.toString() === userId.toString()
+        );
+
+        return {
             projectId: p._id,
             projectName: p.projectName,
-            role: myMembership.role === 'other' ? myMembership.roleOther : myMembership.role
-          };
-       });
-     res.status(200).json({success: true,
-      user: {
-       _id: user._id,
-      name: user.name,
-      email: user.email,
-      profilePicture: user.profilePicture,
-      memberSince: user.createdAt
-    },
-    projects: myProjects
-  });
-}
+            role: myMembers.role === 'other'
+                ? myMembers.roleOther
+                : myMembers.role
+        };
+    });
+
+    res.status(200).json({
+        success: true,
+        user: {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            profilePicture: user.profilePicture,
+            memberSince: user.createdAt
+        },
+        projects: myProjects
+    });
+};
+
+
 
 
 export const updateUserProfileData = async(req,res)=>{

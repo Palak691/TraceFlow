@@ -1,8 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter, useParams } from "next/navigation"
-import UserLayout from '@/layouts/UserLayout/UserLayout'
+import {useParams,useRouter} from 'next/navigation'
 import { getMyProject, getProjectById } from '@/config/redux/action/projectAction';
 import styles from './style.module.css'
 import AdminLayout from '@/layouts/adminLayout/AdminLayout';
@@ -10,6 +9,7 @@ import { getTasksByProject } from '@/config/redux/action/taskAction';
 import { getDecisionsByProject } from '@/config/redux/action/decisionAction';
 import { getConversationsByProject } from '@/config/redux/action/conversationAction';
 import DashboardLayout from '@/layouts/dashboardLayout/DashboardLayout';
+
 
 const ProjectOverviewPage = () => {
     const { id } = useParams();
@@ -22,10 +22,7 @@ const ProjectOverviewPage = () => {
     const { conversations, isLoading: conversationsLoading } = useSelector((state) => state.conversation);
     const [showInviteCode, setShowInviteCode] = useState(false);
     const [copied, setCopied] = useState(false);
-    
-      
-
-    const [searchQuery, setSearchQuery] = useState('');
+   
   
    useEffect(() => {
     if (!token) {
@@ -54,21 +51,23 @@ const ProjectOverviewPage = () => {
   const currentUserRole = currentMember?.role;
   const isAdmin = currentUserRole === 'project_manager';
 
-  const filteredTasks = tasks.filter((t) =>
-    t.title?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  const filteredDecisions = decisions.filter((d) =>
-    d.decisionText?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  const filteredConversations = conversations.filter((c) =>
-    c.rawText?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  
  const handleCopyInvite = () => {
         navigator.clipboard.writeText(currentProject.inviteCode);
         setCopied(true);
         setTimeout(() => setCopied(false), 1500);
       };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+     if (!token) {
+       router.push('/login');
+       return;
+    }
+    const query = e.target.elements.search.value.trim();
+  if (!query) return;
+  router.push(`/search/${id}?q=${encodeURIComponent(query)}`);
+};
   return (
 
     <DashboardLayout>
@@ -97,15 +96,12 @@ const ProjectOverviewPage = () => {
             )}
         </div>
         )}
-  
-        <div className={styles.searchBar}>
-          <input
-            type="text"
-            placeholder="Search conversations, tasks, decisions..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
+        <form onSubmit={handleSearch} className={styles.searchBar}>
+           <input name="search" type="text" placeholder="Search conversations, tasks, decisions..."/>
+             <button type="submit" className={styles.addButton}>
+               Search
+              </button>
+             </form>
 
         {isAdmin && <AdminLayout project={currentProject} />}
         <section className={styles.section}>
@@ -116,12 +112,12 @@ const ProjectOverviewPage = () => {
               + Add Conversation
             </button>
           </div>
-}
-          {filteredConversations.length === 0 ? (
+       }
+          {conversations.length === 0 ? (
             <p>No threads yet.</p>
           ) : (
             <ul className={styles.list}>
-              {filteredConversations.map((c) => (
+              {conversations.map((c) => (
                 <li key={c._id} className={styles.conversationItem}>
                   <span className={styles.sourceTag}>{c.sourceType}</span>
                   <p>{c.summary || 'Processing summary...'}</p>
@@ -133,7 +129,7 @@ const ProjectOverviewPage = () => {
 
         <section className={styles.section}>
           <h2>Tasks</h2>
-          {filteredTasks.length === 0 ? (
+          {tasks.length === 0 ? (
             <p>No tasks yet.</p>
           ) : (
             <table className={styles.taskTable}>
@@ -146,10 +142,9 @@ const ProjectOverviewPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredTasks.map((t) => (
+                {tasks.map((t) => (
                   <tr key={t._id}>
                     <td>{t.title}</td>
-                    {/* <td>{t.assignee || t.assigneeRaw || 'Unassigned'}</td> */}
                     <td className={styles.assignee}>{t.assignee?.name || t.assigneeRaw || 'Unassigned — needs review'}</td>
                     <td>{t.deadline ? new Date(t.deadline).toLocaleDateString() : '—'}</td>
                     <td>{t.status}</td>
@@ -162,11 +157,11 @@ const ProjectOverviewPage = () => {
 
         <section className={styles.section}>
           <h2>Decisions</h2>
-          {filteredDecisions.length === 0 ? (
+          {decisions.length === 0 ? (
             <p>No decisions logged yet.</p>
           ) : (
             <ul className={styles.list}>
-              {filteredDecisions.map((d) => (
+              {decisions.map((d) => (
                 <li key={d._id} className={styles.decisionItem}>
                   <span className={styles.typeTag}>{d.type}</span>
                   <p>{d.decisionText}</p>

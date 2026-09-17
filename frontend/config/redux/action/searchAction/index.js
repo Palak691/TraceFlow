@@ -2,7 +2,7 @@ import { clientServer } from "@/config";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const searchProject = createAsyncThunk(
-     "task/searchProject",
+     "search/searchProject",
     async({token,projectId,q},thunkAPI)=>{
         try{
             const response = await clientServer.get(`/api/search`, {params: { q, projectId},

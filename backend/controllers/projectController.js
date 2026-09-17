@@ -63,25 +63,20 @@ export const getMyProjects = async (req,res)=>{
 }
 
 export const getProjectById = async(req,res)=>{
-    const {projectId} = req.params;
-    const project = await Project.findById(projectId).populate('members.user','name email');
-    if (!project) throw new ExpressErr(404, 'Project not found');
 
-    const isMember =  project.members.some(mem=> mem.user._id.toString() === req.user._id.toString());
-    if(!isMember) throw new ExpressErr(403, 'Not authorized to view this project');
-     res.status(200).json({ success: true, project });
+    const project = await Project.findById(req.project._id)
+        .populate('members.user', 'name email');
 
+    res.status(200).json({ success: true, project});
+  
 }
 
 export const transferOwnership = async (req, res) => {
-  const { projectId } = req.params;
+
   const { newOwnerId } = req.body;
+   const project = req.project;
 
-  const project = await Project.findById(projectId);
-  if (!project) throw new ExpressErr(404, 'Project not found');
 
-  const isCurrentOwner = project.createdBy.toString() === req.user._id.toString();
-  if (!isCurrentOwner) throw new ExpressErr(403, 'Only the current owner can transfer ownership');
 
   const targetMember = project.members.find(m => m.user.toString() === newOwnerId);
   if (!targetMember) throw new ExpressErr(400, 'New owner must already be a project member');
@@ -95,19 +90,12 @@ export const transferOwnership = async (req, res) => {
   project.createdBy = newOwnerId;
 
   await project.save();
-  res.json({ success: true, project });
+   res.json({ success: true, project });
 };
 
 export const deleteProject = async (req, res) => {
-  const { projectId } = req.params;
-
-  const project = await Project.findById(projectId);
-
-  if (!project) {
-    throw new ExpressErr(404, 'Project not found');
-  }
-
-  await Project.findOneAndDelete({ _id: projectId });
+ 
+  await Project.findByIdAndDelete(req.project._id);
 
   res.status(200).json({
     success: true,

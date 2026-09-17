@@ -9,7 +9,7 @@ import { getTasksByProject, updateTask } from '@/config/redux/action/taskAction'
 const MyTasksPage = () => {
   const { id } = useParams();
   const { token, user } = useSelector((state) => state.auth);
-  const { tasks, isLoading } = useSelector((state) => state.task);
+  const { tasks, isLoading,updatingTaskId } = useSelector((state) => state.task);
   const dispatch = useDispatch();
   const router = useRouter();
   const [taskError, setTaskError] = useState('');
@@ -23,7 +23,7 @@ const MyTasksPage = () => {
   if (isLoading) return <DashboardLayout><p className={styles.emptyState}>Loading...</p></DashboardLayout>
 
   const myTasks = tasks.filter(t => t.assignee?._id?.toString() === user?._id?.toString())
-  const unassignedOrOthers = tasks.filter(t => t.assignee?._id?.toString() !== user?._id?.toString())
+  const otherTasks = tasks.filter(t => t.assignee?._id?.toString() !== user?._id?.toString())
 
   const markComplete = async (taskId) => {
     setTaskError('');
@@ -33,7 +33,8 @@ const MyTasksPage = () => {
       setTaskError(err?.message || 'Failed to update task')
     }
   }
-
+console.log("CURRENT USER:", user);
+console.log("ALL TASKS:", tasks);
   return (
     <DashboardLayout>
       <div className={styles.tasksPage}>
@@ -48,7 +49,9 @@ const MyTasksPage = () => {
               {t.deadline && <span className={styles.deadline}>{new Date(t.deadline).toLocaleDateString()}</span>}
               <span className={`${styles.statusBadge} ${styles[t.status]}`}>{t.status}</span>
               {t.status !== 'completed' && (
-                <button className={styles.markDoneBtn} onClick={() => markComplete(t._id)}>Mark done</button>
+                <button className={styles.markDoneBtn} onClick={() => markComplete(t._id)} disabled={updatingTaskId === t._id}>
+                     {updatingTaskId === t._id ? 'Updating...' : 'Mark done'}
+                  </button>
               )}
             </div>
           ))}
@@ -56,11 +59,16 @@ const MyTasksPage = () => {
 
         <h2 className={styles.sectionTitle}>Other Tasks</h2>
         <div className={styles.taskList}>
-          {unassignedOrOthers.length === 0 && <p className={styles.emptyState}>No other tasks.</p>}
-          {unassignedOrOthers.map((t) => (
+          {otherTasks.length === 0 && <p className={styles.emptyState}>No other tasks.</p>}
+          {otherTasks.map((t) => (
             <div key={t._id} className={styles.taskCard}>
               <p className={styles.taskTitle}>{t.title}</p>
-              <span className={styles.assignee}>{t.assignee?.name || t.assigneeRaw || 'Unassigned — needs review'}</span>
+              <span className={styles.assignee}>{t.assignee?.name || t.assigneeRaw || 'Unassigned'}
+              </span>
+              {t.flaggedForReview && ( <span className={styles.reviewBadge}>
+               Needs review
+               </span>
+              )}
               <span className={`${styles.statusBadge} ${styles[t.status]}`}>{t.status}</span>
             </div>
           ))}

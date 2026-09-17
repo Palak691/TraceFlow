@@ -21,6 +21,7 @@ const PORT = process.env.PORT || 8000;
 
 
 const allowedOrigin = "https://trace-flow-mu.vercel.app"
+
 app.use(cors({
   origin: allowedOrigin,
   credentials: true

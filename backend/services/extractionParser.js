@@ -4,11 +4,28 @@ import Project from "../models/projectModel.js";
 
 const matchAssignee = (name, members) => {
   if (!name) return { assignee: null, assigneeRaw: null };
+
   const normalized = name.trim().toLowerCase();
-  const match = members.find(m => m.user?.name?.trim().toLowerCase() === normalized);
+
+  const match = members.find((m) => {
+    const memberName = m.user?.name?.trim().toLowerCase();
+
+    return (
+      memberName === normalized ||
+      memberName?.includes(normalized) ||
+      normalized.includes(memberName)
+    );
+  });
+
   return match
-    ? { assignee: match.user._id, assigneeRaw: null }
-    : { assignee: null, assigneeRaw: name };
+    ? {
+        assignee: match.user._id,
+        assigneeRaw: null
+      }
+    : {
+        assignee: null,
+        assigneeRaw: name
+      };
 };
 
 const parseDeadline = (dateStr) => {
@@ -19,14 +36,18 @@ const parseDeadline = (dateStr) => {
 
 export const resolveExtraction = async (extraction, projectId, conversationId) => {
   console.log("RAW AI EXTRACTION:", JSON.stringify(extraction, null, 2)); // temporary debug
+
+;
+  console.log("ALL PROJECTS:", await Project.find({}, "_id name"));
   const { summary, tasks = [], decisions = [] } = extraction;
 
   const project = await Project.findById(projectId).populate('members.user', 'name');
+  
   if (!project) throw new Error('Project not found during extraction resolution');
 
   const createdTasks = await Promise.all(
     tasks.map(async (t) => {  
-      console.log("TASK IN MAP:", JSON.stringify(t));
+    
       const { assignee, assigneeRaw } = matchAssignee(t.assignee, project.members);
     
     console.log("RESOLVED:", { assignee, assigneeRaw, deadline: parseDeadline(t.deadline) })

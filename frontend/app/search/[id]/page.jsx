@@ -1,26 +1,37 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, useRouter } from 'next/navigation'
-
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import styles from './style.module.css'
 import { searchProject } from '@/config/redux/action/searchAction'
 import DashboardLayout from '@/layouts/dashboardLayout/DashboardLayout'
 
 const SearchPage = () => {
   const { id } = useParams()
-  const [query, setQuery] = useState('')
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get('q') || '';
+  const [query, setQuery] = useState(initialQuery);
   const { token } = useSelector((state) => state.auth)
   const { results, isLoading } = useSelector((state) => state.search)
   const dispatch = useDispatch()
-  const router = useRouter()
+  const router = useRouter();
+   useEffect(() => {
+     setQuery(initialQuery);
+    if (!token || !initialQuery) return;
+     dispatch(searchProject({token,projectId: id,q: initialQuery}));
+   }, [token, id, initialQuery, dispatch]);
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!token) { router.push('/login'); return }
-    if (!query.trim()) return
-    dispatch(searchProject({ token, projectId: id, q: query }))
+     const trimmedQuery = query.trim();
+
+    if (!trimmedQuery) return;
+
+    router.push(`/search/${id}?q=${encodeURIComponent(trimmedQuery)}`);
+    
   }
+  
 
   return (
     <DashboardLayout>
@@ -67,7 +78,7 @@ const SearchPage = () => {
             {results.conversations.length === 0 ? <p>No matching conversations.</p> : (
               results.conversations.map(c => (
                 <div key={c._id} className={styles.resultCard}>
-                  <p>{c.summary || c.rawText.slice(0, 100)}</p>
+                  <p>{c.summary || c.rawText?.slice(0, 100) || 'No Content available'}</p>
                 </div>
               ))
             )}
