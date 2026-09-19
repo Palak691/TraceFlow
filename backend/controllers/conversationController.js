@@ -1,33 +1,9 @@
-// conversationController.js
 import Conversation from "../models/conversationModel.js";
-import { processCommunication } from "../services/aiService.js";
-import { resolveExtraction } from "../services/extractionParser.js";
+import { processAndSaveConversation } from "../aiServices/conversationService.js";
 import { extractTextFromImage } from "../services/ocrService.js";
 import ExpressErr from "../utlis/ExpressErr.js";
 
-// shared logic — used by both text and image entry points
-const processAndSaveConversation = async ({ projectId, source, rawText, userId }) => {
-  const conversation = await Conversation.create({
-    projectId,
-    sourceType: source,
-    rawText,
-    uploadedBy: userId
-  });
 
-  let extraction;
-  try {
-    extraction = await processCommunication(rawText, new Date());
-  } catch (err) {
-    return { conversation, warning: 'Saved but AI extraction failed. You can retry processing later.' };
-  }
-
-  const { summary, tasks, decisions } = await resolveExtraction(extraction, projectId, conversation._id);
-  conversation.summary = summary;
-  conversation.processedAt = new Date();
-  await conversation.save();
-
-  return { conversation, tasks, decisions };
-};
 
 export const createConversation = async (req, res) => {
   const {source, rawText } = req.body;

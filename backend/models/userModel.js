@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
 
 
 userSchema.post('findOneAndDelete', async function(deletedUser){
-     if (!deletedUser) return;
+   if (!deletedUser) return;
 
   const userId = deletedUser._id;
   const Project = mongoose.model('Project');

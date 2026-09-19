@@ -65,12 +65,11 @@ export const uploadProfilePicture = async (req,res) =>{
 export const getUserAndProfile = async (req, res) => {
     const user = req.user;
     const userId = user._id;
-
+//Find all projects where the user is a member
     const projects = await Project.find({'members.user': userId}).select('projectName members');
 
     const myProjects = projects.map(p => {
-        const myMembers = p.members.find(m => m.user.toString() === userId.toString()
-        );
+        const myMembers = p.members.find(m => m.user.toString() === userId.toString());
 
         return {
             projectId: p._id,
@@ -98,7 +97,7 @@ export const getUserAndProfile = async (req, res) => {
 
 
 export const updateUserProfileData = async(req,res)=>{
-    const {  name,} = req.body;               
+    const {  name} = req.body;               
   if (name && name.trim()) {
     await User.findByIdAndUpdate(req.user._id, { name: name.trim() });
   }

@@ -5,14 +5,14 @@ import ExpressErr from "../utlis/ExpressErr.js";
 export const createProject = async (req,res)=>{
     const {projectName, projectType, description,projectTypeOther } = req.body;
      
-     if (!projectName) throw new ExpressErr(400, 'Project name is required');
-     if (!projectType) throw new ExpressErr(400, 'Project type is required');
+    if (!projectName) throw new ExpressErr(400, 'Project name is required');
+    if (!projectType) throw new ExpressErr(400, 'Project type is required');
 
-     const allowedProjectTypes = ['residential', 'commercial', 'institutional', 'interior', 'renovation', 'other'];
+    const allowedProjectTypes = ['residential', 'commercial', 'institutional', 'interior', 'renovation', 'other'];
     if (!allowedProjectTypes.includes(projectType)) {
      throw new ExpressErr(400, 'Please select a valid project type');
      }
-     if (projectType === 'other' && (!projectTypeOther || !projectTypeOther.trim())) {
+    if (projectType === 'other' && (!projectTypeOther || !projectTypeOther.trim())) {
         throw new ExpressErr(400, 'Invalid project type');
      }
 
@@ -48,7 +48,7 @@ export const joinProject = async(req,res)=>{
      project.members.push({
          user : req.user._id,
          role ,
-         roleOther :  role === 'other'? roleOther.trim() : undefined,
+         roleOther :  role === 'other'? roleOther.trim() : null,
          joinedAt : Date.now()
 
      });
@@ -74,9 +74,7 @@ export const getProjectById = async(req,res)=>{
 export const transferOwnership = async (req, res) => {
 
   const { newOwnerId } = req.body;
-   const project = req.project;
-
-
+  const project = req.project;
 
   const targetMember = project.members.find(m => m.user.toString() === newOwnerId);
   if (!targetMember) throw new ExpressErr(400, 'New owner must already be a project member');
@@ -97,8 +95,5 @@ export const deleteProject = async (req, res) => {
  
   await Project.findByIdAndDelete(req.project._id);
 
-  res.status(200).json({
-    success: true,
-    message: 'Project deleted successfully'
-  });
+  res.status(200).json({ success: true, message: 'Project deleted successfully'});
 };

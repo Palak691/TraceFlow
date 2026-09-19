@@ -7,25 +7,18 @@ const matchAssignee = (name, members) => {
 
   const normalized = name.trim().toLowerCase();
 
-  const match = members.find((m) => {
-    const memberName = m.user?.name?.trim().toLowerCase();
+  let match = members.find((m) => m.user?.name?.trim().toLowerCase() === normalized);
 
-    return (
-      memberName === normalized ||
-      memberName?.includes(normalized) ||
-      normalized.includes(memberName)
-    );
-  });
+  if (!match) {
+    const candidates = members.filter((m) => {
+      const firstName = m.user?.name?.trim().toLowerCase().split(' ')[0];
+      return firstName === normalized;
+    });
 
-  return match
-    ? {
-        assignee: match.user._id,
-        assigneeRaw: null
-      }
-    : {
-        assignee: null,
-        assigneeRaw: name
-      };
+    if(candidates.length === 1 ) match = candidates[0];
+  }
+  return match ? 
+  { assignee: match.user._id, assigneeRaw: null } : { assignee: null, assigneeRaw: name };
 };
 
 const parseDeadline = (dateStr) => {
@@ -35,22 +28,20 @@ const parseDeadline = (dateStr) => {
 };
 
 export const resolveExtraction = async (extraction, projectId, conversationId) => {
-  console.log("RAW AI EXTRACTION:", JSON.stringify(extraction, null, 2)); // temporary debug
+  //testing
+  // console.log("RAW AI EXTRACTION:", JSON.stringify(extraction, null, 2)); // temporary debug
+  // console.log("ALL PROJECTS:", await Project.find({}, "_id name"));
 
-;
-  console.log("ALL PROJECTS:", await Project.find({}, "_id name"));
   const { summary, tasks = [], decisions = [] } = extraction;
 
   const project = await Project.findById(projectId).populate('members.user', 'name');
-  
   if (!project) throw new Error('Project not found during extraction resolution');
 
   const createdTasks = await Promise.all(
     tasks.map(async (t) => {  
-    
-      const { assignee, assigneeRaw } = matchAssignee(t.assignee, project.members);
-    
-    console.log("RESOLVED:", { assignee, assigneeRaw, deadline: parseDeadline(t.deadline) })
+    const { assignee, assigneeRaw } = matchAssignee(t.assignee, project.members);
+    // console.log("RESOLVED:", { assignee, assigneeRaw, deadline: parseDeadline(t.deadline) })
+
       return Task.create({
         projectId,
         conversationId,

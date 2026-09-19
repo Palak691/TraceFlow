@@ -14,5 +14,6 @@ router.route('/').post(validateUser,checkProjectMember,wrapAsync(createConversat
 router.route('/upload').post(validateUser, upload.single('image'),checkProjectMember, wrapAsync(createConversationFromImage));
 router.route('/:projectId').get(validateUser,checkProjectMember,wrapAsync(getConversationsByProject));
 
-
+//deleteConversatonChat
+//delete chat req to admin
 export default router;
