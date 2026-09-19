@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 
-router.route('/').get(validateUser, checkProjectMember, wrapAsync(search));
+router.route('/:projectId').get(validateUser, checkProjectMember, wrapAsync(search));
 
 
 

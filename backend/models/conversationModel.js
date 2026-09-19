@@ -23,12 +23,26 @@ const conversationSchema = new mongoose.Schema({
 
   },
   processedAt :{
-    type : Date
+      type : Date
   },
   uploadedBy:{
      type : mongoose.Schema.Types.ObjectId,
      ref : 'User'
+  },
+  deletionRequested: {
+     type: Boolean,
+    default: false
+  },
+  deletionRequestedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
+  deletionReason: {
+    type: String,
+    default: null
   }
+  
 },{timestamps : true});
 
 conversationSchema.index({ rawText: 'text', summary: 'text' });

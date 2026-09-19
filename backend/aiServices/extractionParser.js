@@ -2,19 +2,25 @@ import Task from "../models/taskModel.js";
 import Decision from "../models/decisionModel.js";
 import Project from "../models/projectModel.js";
 
+
+export const namesMatch = (rawName, candidateFullName) => {
+  if (!rawName || !candidateFullName) return false;
+  const normalized = rawName.trim().toLowerCase();
+  const candidate = candidateFullName.trim().toLowerCase();
+  const candidateFirst = candidate.split(' ')[0];
+  return normalized === candidate || normalized === candidateFirst;
+};
+
+
 const matchAssignee = (name, members) => {
+
   if (!name) return { assignee: null, assigneeRaw: null };
 
   const normalized = name.trim().toLowerCase();
-
   let match = members.find((m) => m.user?.name?.trim().toLowerCase() === normalized);
 
   if (!match) {
-    const candidates = members.filter((m) => {
-      const firstName = m.user?.name?.trim().toLowerCase().split(' ')[0];
-      return firstName === normalized;
-    });
-
+     const candidates = members.filter(m => namesMatch(name, m.user?.name || ''));
     if(candidates.length === 1 ) match = candidates[0];
   }
   return match ? 

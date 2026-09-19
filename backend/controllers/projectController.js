@@ -1,5 +1,6 @@
+import { namesMatch } from "../aiServices/extractionParser.js";
 import Project from "../models/projectModel.js";
-import  {sendInviteEmails}  from "../services/emailService.js";
+import Task from "../models/taskModel.js";
 import ExpressErr from "../utlis/ExpressErr.js";
 
 export const createProject = async (req,res)=>{
@@ -53,6 +54,28 @@ export const joinProject = async(req,res)=>{
 
      });
      await project.save();
+
+     // reconcile: assign any previously-unmatched tasks whose raw name matches this new member
+     const unresolvedTasks = await Task.find({
+       projectId: project._id,
+       assignee: null,
+       assigneeRaw: { $ne: null }
+     });
+  
+     const toReassign = unresolvedTasks.filter(t => namesMatch(t.assigneeRaw, req.user.name));
+
+     if (toReassign.length) {
+       await Task.updateMany(
+         { _id: { $in: toReassign.map(t => t._id) } },
+         { $set: { assignee: req.user._id, assigneeRaw: null } }
+       );
+     }
+       const updatedTasks = await Task.find({
+    projectId: project._id,
+    assignee: req.user._id
+  });
+
+
      res.status(200).json({ success: true, project, message: "Joined project successfully" });
 }
 

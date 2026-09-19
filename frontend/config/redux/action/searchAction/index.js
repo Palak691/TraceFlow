@@ -5,7 +5,7 @@ export const searchProject = createAsyncThunk(
      "search/searchProject",
     async({token,projectId,q},thunkAPI)=>{
         try{
-            const response = await clientServer.get(`/api/search`, {params: { q, projectId},
+            const response = await clientServer.get(`/api/search/${projectId}`, {params: { q, projectId},
               headers : {
                 Authorization : `Bearer ${token}`
               }

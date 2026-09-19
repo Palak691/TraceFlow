@@ -46,12 +46,12 @@ export default function Home() {
             <span className={styles.projectArrow}>→</span>
           </Link>
         </li>
-      ))}
-    </ul>
-  </div>
-)}
+        ))}
+      </ul>
+      </div>
+     )}
        
-        <div className={styles.buttons}>
+      <div className={styles.buttons}>
         <Link href={'/create-project'} className={styles.createBtn}>Create Project</Link>
         <button  className={styles.joinBtn} onClick={()=>{
           if(!token){

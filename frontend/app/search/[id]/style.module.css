@@ -1,0 +1,140 @@
+.searchForm {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  display: flex;
+  gap: 10px;
+  padding: 0 16px;
+}
+
+.searchForm input {
+  flex: 1;
+  border: 1px solid #A8B0C4;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  background: #0F1729;
+  color: #F8F9FB;
+  transition: border-color 0.2s ease;
+}
+
+.searchForm input::placeholder {
+  color: #6b7280;
+}
+
+.searchForm input:focus {
+  border-color: #F5C563;
+}
+
+.searchForm button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  background: #F5C563;
+  color: #141D33;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.searchForm button:hover {
+  background: #E8B347;
+}
+
+.searchingState {
+  text-align: center;
+  color: #A8B0C4;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+.resultsSection {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 28px;
+  padding: 0 16px;
+}
+
+.resultsSection h2 {
+  font-size: 17px;
+  color: #F5C563;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  margin-bottom: 12px;
+}
+
+.emptyResult {
+  color: #A8B0C4;
+  font-size: 14px;
+}
+
+.resultCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  background: #141D33;
+  border: 1px solid #223055;
+  border-radius: 10px;
+}
+
+.resultCard p {
+  color: #F8F9FB;
+  font-size: 14px;
+  margin: 0;
+}
+
+.resultCard span {
+  font-size: 13px;
+  color: #A8B0C4;
+}
+
+.typeTag {
+  display: inline-block;
+  width: fit-content;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #F5C563;
+  background: #2a2410;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+  .searchForm {
+    padding: 0 28px;
+  }
+
+  .resultsSection {
+    padding: 0 28px;
+  }
+  .resultsSection h2 {
+  font-size: 20px;
+  
+}
+}
+
+@media (min-width: 1024px) {
+  .searchForm,
+  .resultsSection {
+    padding: 0;
+  }
+
+  .resultsSection {
+    max-width: 1000px;
+  }
+  
+.resultsSection h2 {
+  font-size: 27px;
+  
+}
+.resultCard p {
+  font-size: 15px;
+}
+
+}

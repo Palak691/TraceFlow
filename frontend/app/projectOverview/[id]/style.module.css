@@ -92,8 +92,8 @@
 
 .searchBar {
   width: 100%;
+ 
 }
-
 .searchBar input {
   width: 100%;
   padding: 0.6rem 0.75rem;
@@ -151,7 +151,7 @@
 }
 
 
-.addButton {
+.addButton,.searchButton {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -165,9 +165,10 @@
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
+  margin: 4px;
 }
 
-.addButton:hover {
+.addButton:hover ,.searchButton:hover{
   background: #E8B347;
   border-color: #E8B347;
 }
@@ -376,7 +377,7 @@
   }
 
   .projectHeader h1 {
-    font-size: 1.9rem;
+    font-size: 2.4rem;
   }
 
   .conversationItem,

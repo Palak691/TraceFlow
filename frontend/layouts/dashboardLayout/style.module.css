@@ -98,10 +98,10 @@
 @media (min-width: 1024px) {
   .dashboard_leftContainer {
     width: 240px;
-    padding: 35px 25px;
+    padding: 25px 15px;
   }
 
   .dashboard_rightContainer {
-    padding: 45px 50px;
+    padding: 35px 40px;
   }
 }

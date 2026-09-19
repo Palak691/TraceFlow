@@ -33,8 +33,10 @@ const MyTasksPage = () => {
       setTaskError(err?.message || 'Failed to update task')
     }
   }
+  console.log(tasks.filter(t => t.assigneeRaw).map(t => t.assigneeRaw))
 console.log("CURRENT USER:", user);
 console.log("ALL TASKS:", tasks);
+console.log("my TASKS:", myTasks);
   return (
     <DashboardLayout>
       <div className={styles.tasksPage}>

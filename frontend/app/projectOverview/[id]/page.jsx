@@ -35,7 +35,7 @@ const ProjectOverviewPage = () => {
     dispatch(getConversationsByProject({ token, projectId: id }));
   }, [id, token, router, dispatch]);
 
-    if (!token) return null;
+  if (!token) return null;
   if (projectLoading || tasksLoading || decisionsLoading || conversationsLoading || !currentProject) {
     return (
       <DashboardLayout>
@@ -65,8 +65,8 @@ const ProjectOverviewPage = () => {
        return;
     }
     const query = e.target.elements.search.value.trim();
-  if (!query) return;
-  router.push(`/search/${id}?q=${encodeURIComponent(query)}`);
+     if (!query) return;
+    router.push(`/search/${id}?q=${encodeURIComponent(query)}`);
 };
   return (
 
@@ -98,7 +98,7 @@ const ProjectOverviewPage = () => {
         )}
         <form onSubmit={handleSearch} className={styles.searchBar}>
            <input name="search" type="text" placeholder="Search conversations, tasks, decisions..."/>
-             <button type="submit" className={styles.addButton}>
+             <button type="submit" className={styles.searchButton}>
                Search
               </button>
              </form>

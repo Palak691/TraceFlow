@@ -79,6 +79,7 @@
   color: #F8F9FB;
   text-decoration: none;
   transition: all 0.2s ease;
+  min-width: 0;
 }
 
 .projectLink:hover {
@@ -200,7 +201,7 @@
     margin-top: 110px;
   }
   .myProjects ul {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
   .hero h1 {
     font-size: 58px;

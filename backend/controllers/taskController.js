@@ -1,41 +1,52 @@
-
 import Task from "../models/taskModel.js";
 import ExpressErr from '../utlis/ExpressErr.js'
 
 export const getTasksByProject = async (req,res)=>{
-  const tasks = await Task.find({
-    projectId: req.project._id
-  }).populate('assignee', 'name email')
-    .sort({  createdAt: -1 });
+
+  const tasks = await Task.find({ projectId: req.project._id}).populate('assignee', 'name email')
+  .sort({  createdAt: -1 });
 
   res.json({ success: true, tasks });
+
 }
 
-export const updatetask = async (req,res)=>{
- const allowedUpdates = ['status', 'assignee', 'deadline', 'title'];
+export const updateTask = async (req,res)=>{
 
-  const updates = {};
+  const { status, assignee, deadline, title } = req.body;
+  const isManager = req.member.role === 'project_manager';
 
-  allowedUpdates.forEach(field => {if (req.body[field] !== undefined) {
-      updates[field] = req.body[field];}
-  });
+  const updates = {
+    ...(status !== undefined && {status}),
+    ...(isManager && assignee !== undefined && {assignee}),
+    ...(isManager && deadline !== undefined && {deadline}),
+    ...(isManager && title !== undefined && {title}),
+  };
+ 
+  if (!isManager && (assignee !== undefined || deadline !== undefined || title !== undefined)) {
+    throw new ExpressErr(403, 'Only the project manager can change assignee, deadline, or title');
+  }
 
-  const updatedTask = await Task.findByIdAndUpdate(
-    req.task._id, updates,{ new: true, runValidators: true}).populate('assignee', 'name email');
+  if(updates.assignee){ const isMemberOfProject = req.project.members.some(m =>
+         m.user.toString() === updates.assignee);
+    if (!isMemberOfProject) throw new ExpressErr(400, 'Assignee must be a project member');
+  }
 
-  res.json({success: true, updatedTask});
+  const updatedTask = await Task.findByIdAndUpdate(req.task._id, updates, { new: true, runValidators: true })
+  .populate('assignee', 'name email');
+
+  res.json({ success: true, updatedTask });
+
 }
 
 export const deleteTask = async (req, res) => {
- await Task.findByIdAndDelete(req.task._id);
 
+  await Task.findByIdAndDelete(req.task._id);
   res.json({ success: true, message: 'Task deleted'});
+
 };
 
 
 //reviews
-
-
 export const flagTaskForReview = async (req, res) => {
  
   req.task.flaggedForReview = true;
@@ -43,33 +54,27 @@ export const flagTaskForReview = async (req, res) => {
 
   await req.task.save();
 
-  res.json({
-    success: true,
-    task: req.task
-  });
-};
+  res.json({success: true,task: req.task});
+ };
 
 export const resolveFlag = async (req, res) => {
-   const { newAssignee } = req.body;
+   if (!req.task.flaggedForReview) {
+    throw new ExpressErr(400, 'This task is not currently flagged for review');
+  }
+  const { newAssignee } = req.body;
 
   if (newAssignee) {
-    const isValidAssignee = req.project.members.some( m => m.user.toString() === newAssignee.toString()
-    );
-
+    const isValidAssignee = req.project.members.some( m => m.user.toString() === newAssignee.toString());
     if (!isValidAssignee) {
-      throw new ExpressErr( 400,'newAssignee must be a project member');
+      throw new ExpressErr( 400,'newAssignee must be a project member');}
+       req.task.assignee = newAssignee;
     }
-
-    req.task.assignee = newAssignee;
-  }
 
   req.task.flaggedForReview = false;
   req.task.flaggedBy = null;
 
   await req.task.save();
 
-  res.json({
-    success: true,
-    task: req.task
-  });
+  res.json({success: true,task: req.task});
+
 };
